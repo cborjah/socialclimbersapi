@@ -1,7 +1,7 @@
 const express = require('express'),
       bodyParser = require('body-parser'),
-      mongoose = require('mongoose'),
-      login = require('../resources/credentials');
+      mongoose = require('mongoose');
+      // login = require('../resources/credentials');
 
 const app = express(),
       router = require('./config/router');
