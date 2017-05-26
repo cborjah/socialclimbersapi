@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', router);
 
 const URL = `mongodb://${process.env.USERNAME || login.username}:${process.env.PASSWORD || login.password}@ds153521.mlab.com:53521/socialclimbers`;
+console.log(URL);
 mongoose.connect(URL);
 
 let db = mongoose.connection;

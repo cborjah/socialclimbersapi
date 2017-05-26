@@ -10,8 +10,12 @@ const users = {
       });
 
       newUser.save((err, data) => {
-        if(err) res.error(err);
-        else res.send(`Saved: ${data}`);
+        if(err) {
+          console.log(`Error: ${err}`);
+          res.error(err);
+        } else {
+          res.send(`Saved: ${data}`);
+        }
       });
     }
   }
