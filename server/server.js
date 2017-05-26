@@ -13,7 +13,7 @@ app.listen(app.get('port'), () => console.log(`Listening on port ${app.get('port
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', router);
 
-const URL = `mongodb://${login.username}:${login.password}@ds153521.mlab.com:53521/socialclimbers`;
+const URL = `mongodb://${process.env.USERNAME || login.username}:${process.env.PASSWORD || login.password}@ds153521.mlab.com:53521/socialclimbers`;
 mongoose.connect(URL);
 
 let db = mongoose.connection;
