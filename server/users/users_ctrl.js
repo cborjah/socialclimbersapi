@@ -7,9 +7,6 @@ const users = {
             password = req.body.password,
             email = req.body.email;
 
-      console.log(req.body);
-      console.log(username);
-
       User.findOne({ 'username': username })
         .then((user) => {
           if(!user) {
