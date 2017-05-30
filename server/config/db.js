@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const { username, password } = require('../../resources/credentials');
+const { username, password } = require('../../resources/credentials');
 
 const URL = `mongodb://${process.env.USERNAME || username }:${process.env.PASSWORD || password }@ds153521.mlab.com:53521/socialclimbers`;
 // console.log(URL);

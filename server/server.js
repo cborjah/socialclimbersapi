@@ -2,7 +2,7 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       cors = require('cors'),
       db = require('./config/db');
-      // credentials = require('../resources/credentials');
+      credentials = require('../resources/credentials');
 
 const app = express(),
       router = require('./config/router');

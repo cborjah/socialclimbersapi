@@ -1,36 +1,55 @@
 const User = require('./users_model');
+const utils = require('../config/utilities');
 
 const users = {
   '/signup': {
     'post': (req, res) => {
-      const username = req.body.username,
-            password = req.body.password,
-            email = req.body.email;
-
-      User.findOne({ 'username': username })
+      User.findOne({ 'username': req.body.username })
         .then((user) => {
           if(!user) {
-            const newUser = new User({
-              username: username,
-              password: password,
-              email: email
-            });
+            utils.hashPassword(req.body.password)
+              .then((hash) => {
+                const newUser = new User({
+                  username: req.body.username,
+                  password: hash,
+                  email: req.body.email
+                });
 
-            newUser.save((err, data) => {
-              if(err) {
-                console.log(`Error: ${err}`);
-                res.send(err);
-              } else {
-                res.send(`Saved: ${data}`);
-              }
-            });
+                newUser.save((err, data) => {
+                  if(err) {
+                    console.log(`Error saving new user: ${err}`);
+                    res.status(400).send(err);
+                  } else {
+                    res.status(201).send(`Saved: ${data}`);
+                  }
+                });
+              })
+              .catch((err) => {
+                console.log(`Error creating hash: ${err}`);
+                res.status(400).send(err);
+              });
           } else {
-            res.status(404).json('Username already exists!');
+            res.status(200).json('Username already exists!');
           }
         })
         .catch((err) => {
-          res.send('Error creating user: ', err.message);
+          res.status(400).send('Error creating user: ', err.message);
         });
+    }
+  },
+  '/signin': {
+    'post': (req, res) => {
+      User.findOne({ username: req.body.username })
+        .then((user) => {
+          utils.comparePassword(req.body.password, user.password)
+            .then((isMatch) => {
+              if(isMatch) {
+                
+              } else {
+                res.status(200).send('Incorrect password.')
+              }
+            })
+        })
     }
   }
 }
